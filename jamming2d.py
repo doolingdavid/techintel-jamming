@@ -271,7 +271,10 @@ fill_color_dict = {
     'archive': color_archive
 }
 
-dftriple['fill_color'] = dftriple['type'].map(fill_color_dict)
+# Unknown/NaN institution types (e.g. OpenAlex 'funder') aren't in the dict;
+# default them to color_other so the r/g/b unpacking below never sees a NaN.
+dftriple['fill_color'] = dftriple['type'].apply(
+    lambda t: fill_color_dict.get(t, color_other))
 
 
 dftriple['r'] = dftriple['fill_color'].apply(lambda x: x[0])
