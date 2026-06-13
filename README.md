@@ -1,7 +1,7 @@
 # techintel-jamming
 
-RF jamming / GNSS interference / CRPA-antenna focused example of techintel, framed
-for the Joint Navigation Warfare Center (JNWC) navigation-warfare mission.
+RF jamming / GNSS interference / CRPA-antenna focused example of techintel,
+covering the anti-jam / electronic-protection and PNT-resilience literature.
 
 Same pipeline as `techintel-quantum`, re-run from scratch on a keyword OpenAlex
 Works corpus (GPS/GNSS jamming & spoofing, controlled reception pattern antennas,

@@ -173,13 +173,12 @@ pio.templates.default = "plotly_dark"
 # https://discuss.streamlit.io/t/streamlit-overrides-colours-of-plotly-chart/34943
 st.set_page_config(layout='wide')
 
-st.title("Example: RF Jamming & CRPA Antennas — Navigation Warfare tech-intel (JNWC)")
+st.title("Example: RF Jamming, GNSS Interference & CRPA Antennas — tech-intel")
 st.markdown("""
 Technology-intelligence sweep of the open scientific literature on RF jamming,
 GNSS interference, and Controlled Reception Pattern Antennas (CRPA) — the
-anti-jam / electronic-protection topics most relevant to the
-[Joint Navigation Warfare Center (JNWC)](https://www.stratcom.mil/) mission of
-assured positioning, navigation, and timing (PNT) in contested environments.
+anti-jam / electronic-protection topics central to assured positioning,
+navigation, and timing (PNT) in contested environments.
 
 * GPS / GNSS jamming (denial of satellite navigation by RF interference), 全球定位系统干扰, Глушение GPS
 * GNSS spoofing (transmission of counterfeit navigation signals), 全球导航卫星系统欺骗, Спуфинг ГНСС
