@@ -1027,7 +1027,6 @@ with tab9:
     dg = pd.read_json(dg.to_json())
 
     mean_lat = dg['latitude'].mean()
-    st.write(dg.head())
     mean_lon = dg['longitude'].mean()
     cl_initial_view = pdk.ViewState(
         latitude = dg['latitude'].mean(),
