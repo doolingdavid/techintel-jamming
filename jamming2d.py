@@ -82,8 +82,15 @@ def get_article_llm_description(title:str, abstract:str, authors:list, affils:li
     Cached: Streamlit reruns the whole script on every interaction; without
     caching this LLM call re-fires (and re-bills) on each tab click.
     """
-    authors = "; ".join(authors)
-    affils = "; ".join(affils)
+    # author_list / affil_list can be a list with NaN floats, or a bare NaN
+    # float when OpenAlex has no data; join only the real strings so neither
+    # case raises TypeError and silently drops us into the topic-only path.
+    def _join_strs(seq):
+        if not isinstance(seq, (list, tuple)):
+            return ""
+        return "; ".join(str(a) for a in seq if isinstance(a, str))
+    authors = _join_strs(authors)
+    affils = _join_strs(affils)
     return chain_article.invoke({"article_title": title,
                                  "article_abstract": abstract,
                                  "author_list": authors,
@@ -612,7 +619,17 @@ try:
     article_title = df_selected['title'].iloc[0]
     article_abstract = df_selected['abstract'].iloc[0]
     article_authors = df_selected['author_list'].iloc[0]
-    article_affils = df_selected['affil_list'].iloc[0]
+    # dfinfo['affil_list'] is unpopulated (all NaN); pull this paper's real
+    # affiliations from dftriple (keyed by paper_id) so the SETA prompt can
+    # actually flag cross-country collaborations.
+    article_id = df_selected['id'].iloc[0]
+    affil_rows = dftriple[dftriple['paper_id'] == article_id][
+        ['display_name', 'country_code']].drop_duplicates()
+    article_affils = [
+        f"{name} ({cc})" if isinstance(cc, str) else str(name)
+        for name, cc in zip(affil_rows['display_name'], affil_rows['country_code'])
+        if isinstance(name, str)
+    ]
     llm_article_description = get_article_llm_description(article_title, article_abstract,
                 article_authors,  article_affils)
     st.write(f"Selected Article")
